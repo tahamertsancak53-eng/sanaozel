@@ -1,0 +1,27 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Aşkım, küçük bir oyun ♡</title><style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at top left,#ffdde7,transparent 60%),#fff1ec;color:#512d3d;font-family:Georgia,serif}main{width:min(100%,570px);background:#fffcfa;border:1px solid #efd7df;border-radius:28px;padding:clamp(25px,6vw,45px);box-shadow:0 25px 70px #70364a25}h1{font-size:clamp(34px,7vw,54px);font-weight:400}h2{font-size:clamp(27px,5vw,36px);font-weight:400}p{line-height:1.8;font-size:17px;color:#866a76}.eyebrow{font:700 11px Arial;letter-spacing:.2em;text-transform:uppercase;color:#a35d77}.heart{font-size:50px;color:#bd6786}button{font:inherit;cursor:pointer}.primary{border:0;background:#793850;color:white;border-radius:40px;padding:16px 25px;margin-top:20px;font-size:17px}.answer{display:block;width:100%;background:#fff;border:1px solid #ebd6dc;border-radius:14px;padding:17px;margin:11px 0;text-align:left;color:#512d3d;font-size:16px}.answer:hover,.answer.selected{border:2px solid #793850;background:#fff0f4}.hidden{display:none}.reply{padding:17px;background:#fff0f4;border-left:3px solid #ad6582;border-radius:8px;line-height:1.7}.progress{height:6px;background:#f1e1e5;border-radius:8px;margin:20px 0}.fill{height:100%;background:#ae6480;border-radius:8px;transition:width .3s}.small{font:12px Arial;color:#967682}.final{white-space:pre-line;line-height:1.9;font-size:18px}
+</style></head><body><main>
+<section id="intro"><div class="eyebrow">Sadece ikimizin oyunu</div><div class="heart">♡</div><h1>Aşkım, küçük bir oyun oynayalım mı?</h1><p>Seni ne kadar tanıdığımı iddia etmek yerine, seni daha iyi tanımak istiyorum. Hem biraz da gülümseyelim. Hazır mısın?</p><button class="primary" onclick="start()">Başlayalım ♡</button></section>
+<section id="quiz" class="hidden"><div class="eyebrow">Biraz sen, biraz biz</div><div class="progress"><div class="fill" id="fill"></div></div><div class="small" id="count"></div><h2 id="question"></h2><div id="answers"></div><div class="reply hidden" id="reply"></div><button class="primary hidden" id="next" onclick="next()">Devam edelim →</button></section>
+<section id="end" class="hidden"><div class="eyebrow">Oyunun sonu, bizim değil ♡</div><div class="heart">♥</div><h1>Her hâlinle seni seviyorum, aşkım.</h1><div class="final">Güzel olduğunda da.
+Şapşal olduğunda da.
+Kulaklı olduğunda da.
+
+Ama sadece güzel anlarda değil, zor günlerinde de yanında olabilmeyi öğrenmek istiyorum.
+
+Seni kırdığım sözlerimi geri alamam. Kırgınlığını hemen unutmanı da beklemiyorum. Seni dinlemek ve sana verdiğim değeri davranışlarımla göstermek istiyorum.
+
+Bu küçük oyun yüzünde minicik bir gülümseme oluşturabildiyse ne mutlu bana.
+
+Seni seviyorum. ♡</div><button class="primary" onclick="start()">Bir daha oynayalım ↺</button></section>
+</main><script>
+const questions=[
+{q:"Birlikte geçireceğimiz mükemmel bir gün nasıl olurdu?",a:["Bir kafede saatlerce sohbet etmek ☕","Birlikte gezip saçmalamak 😂","Evde film izlemek 🎬"],r:"Benim cevabım: Seninle olduğu sürece üçünün de ayrı bir güzelliği var. ♡"},
+{q:"Bana bir bakış attığında aklımdan ne geçiyor olabilir?",a:["Ne kadar güzel ya… 🥹","Acaba şimdi ne yaptım? 😅","Bir daha bak, lütfen. 💗"],r:"İtiraf: Üçü de mümkün. Ama en çok ilkini düşünüyorum."},
+{q:"Birlikte fotoğraf çekerken en çok hangisiyiz?",a:["Tatlı ve romantik 📸","Şapşal ve komik 😛","İkisi de, bazen aynı anda 🐱"],r:"Fotoğraflarımızın en güzel yanı kusursuz olmaları değil, bizim olmaları."},
+{q:"Şu an sana bir şey söyleme şansım olsa ne derdim?",a:["İyi ki varsın 🌷","Seni dinliyorum 🤍","Seni seviyorum ♡"],r:"Birini seçmek zorunda değilim: Üçünü de söylemek ve hissettirmek istiyorum."},
+{q:"Bu oyunun sonunda ne olmasını isterim?",a:["Biraz gülümsemeni ☺️","Birlikte daha çok anı biriktirmeyi ✨","Sadece beni anlamanı 💌"],r:"En çok, kendini anlaşılmış ve önemsenmiş hissetmeni isterim. Acele etmeden."}
+];let i=0,chosen=false;const el=x=>document.getElementById(x);function show(x){['intro','quiz','end'].forEach(y=>el(y).classList.toggle('hidden',x!==y))}
+function start(){i=0;show('quiz');render()}function render(){chosen=false;el('count').textContent=(i+1)+' / '+questions.length;el('fill').style.width=(i+1)*20+'%';el('question').textContent=questions[i].q;el('answers').replaceChildren();el('reply').classList.add('hidden');el('next').classList.add('hidden');questions[i].a.forEach((a,j)=>{let b=document.createElement('button');b.className='answer';b.textContent=a;b.onclick=()=>{chosen=true;[...el('answers').children].forEach((c,k)=>c.classList.toggle('selected',k===j));el('reply').textContent=questions[i].r;el('reply').classList.remove('hidden');el('next').classList.remove('hidden')};el('answers').append(b)})}
+function next(){if(!chosen)return;i++;if(i<questions.length)render();else show('end')}
+</script></body></html>
